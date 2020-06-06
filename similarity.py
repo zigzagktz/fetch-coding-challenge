@@ -89,11 +89,11 @@ def cosine_operation(n1,n2):
 
 	numerator = sum([ vector1[key]*vector2[key] for key in vector1 ])
 	denomenator = math.sqrt(sum([ (vector1[key]*vector1[key]) for key in vector1 ]) ) * math.sqrt(sum([ (vector2[key]*vector2[key]) for key in vector2 ]) )
-		
-	simalirity = numerator/denomenator	
-
-	return simalirity
-	
+	try:
+		simalirity = numerator/denomenator	
+		return simalirity
+	except:
+		return 1
 	
 app = Flask(__name__)
 
@@ -115,14 +115,14 @@ def result():
 	n2 = request.form.get('n2')
 	n2 = n2+'.txt'
 	
-	if n1 == n2:
+#	if n1 == n2:
 		#raise Exception('Please input different file names')
-		return jsonify("Exception: Please input different file names")
+#		return jsonify("Exception: Please input different file names")
 		
 		
-	elif not (n1 and n2) in ('sample1.txt','sample2.txt','sample3.txt'):
+#	elif not (n1 and n2) in ('sample1.txt','sample2.txt','sample3.txt'):
 		#raise Exception('Please input correct file names')
-		return jsonify("Exception: Please input correct file names")
+#		return jsonify("Exception: Please input correct file names")
 		
 	s = cosine_operation(n1,n2) * 100
 	answer = "The Similarity between two documents is = " + str(round(s,3)) + "%"
