@@ -114,16 +114,11 @@ def result():
 	n1 = n1+".txt"
 	n2 = request.form.get('n2')
 	n2 = n2+'.txt'
-	
-#	if n1 == n2:
-		#raise Exception('Please input different file names')
-#		return jsonify("Exception: Please input different file names")
+			
 		
-		
-#	elif not (n1 and n2) in ('sample1.txt','sample2.txt','sample3.txt'):
-		#raise Exception('Please input correct file names')
-#		return jsonify("Exception: Please input correct file names")
-		
+	if not (n1 and n2) in ('sample1.txt','sample2.txt','sample3.txt'):
+		return jsonify("Exception: Please input correct file names")
+
 	s = cosine_operation(n1,n2) * 100
 	answer = "The Similarity between two documents is = " + str(round(s,3)) + "%"
 	if request.method == 'POST':
