@@ -7,11 +7,18 @@ from flask import Flask, jsonify, render_template, request
 
 
 def readfile(n1, n2):
+
+	""" This function reads the file from the local directory"""
+
 	file1 = open(n1,"r")
 	file2 = open(n2,"r")
 	return file1.read(), file2.read()
 	
 def bucket_creation(n1,n2):
+
+	""" This function creates a bucket that 
+	contains all the words from all the documents"""
+	
 	file1, file2 =  readfile(n1,n2)
 		
 	file2 = file2.replace("you'll","you will")
@@ -34,6 +41,10 @@ def bucket_creation(n1,n2):
 		
 	
 def	vector_formation(n1,n2):
+	
+	"""This function converts the two documnts 
+	into a vector form using tf-idf method"""
+
 	file1, file2, bucket = bucket_creation(n1,n2)
 	count1 = []
 	count2 = []
@@ -51,6 +62,10 @@ def	vector_formation(n1,n2):
 	return vector1, vector2
 
 def cosine_operation(n1,n2):
+
+	"""This function finds the similarity between two vectors 
+	using cosine formula. The result determines how similar two documents are
+	based on their vector orientation"""
 	
 	vector1, vector2 = vector_formation(n1,n2)
 	file1, file2, bucket = bucket_creation(n1,n2)
@@ -79,25 +94,22 @@ def cosine_operation(n1,n2):
 
 	return simalirity
 	
+	
 app = Flask(__name__)
 
-
-@app.route('/predict', methods=['GET','POST'])
-def predict():
-	cosine_operation()
-
-@app.route("/home/n1/<n1>/n2/<n2>")
-def home(n1,n2):
-	s = cosine_operation(n1,n2)
-	return jsonify(s)
-	
 @app.route('/')
 def student():
+	""" This functions provides a form to input documents names"""
+
 	return render_template('student.html')
    
 	
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
+
+	""" this function renders the result 
+	using the Post request from """
+	
 	n1 = request.form.get('n1')
 	n1 = n1+".txt"
 	n2 = request.form.get('n2')
@@ -117,13 +129,7 @@ def result():
 	if request.method == 'POST':
 		return jsonify(answer)
 	
-@app.route("/api/name/<name>")
-def api(name):
-	data = {
-	'name': name,
-	'Age': 6	
-	}
-	return jsonify(data)
+
 
 if __name__=="__main__":
 	app.run()
