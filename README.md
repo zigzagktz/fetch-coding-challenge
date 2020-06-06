@@ -10,5 +10,5 @@
 How to Execute:
 1. Download the reposotory as zip.
 2. Unzip the folder.
-3. Enter the folder and double click executable.py file.
+3. Enter the folder and double click **executable.py** file.
 4. Open this URL: http://127.0.0.1:5000/
